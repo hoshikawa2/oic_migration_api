@@ -29,7 +29,7 @@
       "METHOD" : "POST",
       "PATH_PREFIX" : "/dneonline",
       "PATH" : "/calculator",
-      "ENDPOINT" : "http://www.dneonline.com/calculator.asmx",
+      "ENDPOINT" : "http://www.example.com/calculator.asmx",
       "QUERY_PARAMETERS" : "",
       "GROOVY_SCRIPT" : "",
       "AUTHENTICATION_TYPE" : "BASIC",
