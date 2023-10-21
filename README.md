@@ -16,7 +16,7 @@
       "METHOD" : "GET",
       "PATH_PREFIX" : "/okecep",
       "PATH" : "/cep",
-      "ENDPOINT" : "http://129.153.138.208/cep",
+      "ENDPOINT" : "http://x.x.x.x/cep",
       "QUERY_PARAMETERS" : "cep",
       "GROOVY_SCRIPT" : "",
       "AUTHENTICATION_TYPE" : "BASIC",
