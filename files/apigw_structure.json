@@ -1,0 +1,183 @@
+ {
+    "requestPolicies": {
+      "authentication": {
+        "type": "CUSTOM_AUTHENTICATION",
+        "tokenHeader": "",
+        "tokenQueryParam": "",
+        "tokenAuthScheme": "authentication-scheme",
+        "isAnonymousAccessAllowed": false,
+        "functionId": "ocid1.fnfunc.oc1.phx.aaaaaaaaac2______kg6fq",
+        "maxClockSkewInSeconds": 0,
+        "validationPolicy": {
+          "type": "REMOTE_DISCOVERY",          
+          "clientDetails": {
+            "type": "CUSTOM",
+            "clientId": "client-id",
+            "clientSecretId": "secret-ocid",
+            "clientSecretVersionNumber": 0
+          },          
+          "sourceUriDetails": {
+            "type": "DISCOVERY_URI",
+            "uri": "well-known-uri"
+          },
+          "isSslVerifyDisabled": true,
+          "maxCacheDurationInHours": 0,
+          "additionalValidationPolicy": {
+            "issuers": ["issuer-url", "issuer-url"],
+            "audiences": ["intended-audience"],
+            "verifyClaims": [{
+              "key": "claim-name",
+              "values": ["acceptable-value", "acceptable-value"],
+              "isRequired": true
+            }]
+          }
+        },
+        "tokenHeader": "Authorization",
+        "validationPolicy": {
+          "type": "REMOTE_DISCOVERY",
+          "clientDetails": {
+            "type": "CUSTOM",
+            "clientId": "5hsti38yhy5j2a4tas455rsu6ru8yui3wrst4n1",
+            "clientSecretId": "ocid1.vaultsecret.oc1.iad.amaaaaaa______cggit3q",
+            "clientSecretVersionNumber": 1
+          },          
+          "sourceUriDetails": {
+            "type": "DISCOVERY_URI",
+            "uri": "https://my-idp/oauth2/default/.well-known/openid-configuration"
+          },
+          "isSslVerifyDisabled": false,
+          "maxCacheDurationInHours": 2,
+          "additionalValidationPolicy": {
+            "issuers": ["https://identity.oraclecloud.com/"],
+            "audiences": ["api.dev.io"],
+            "verifyClaims": [{
+              "key": "is_admin",
+              "values": ["service:app", "read:hello"],
+              "isRequired": true
+            }]
+          }
+        }
+      }, 
+      "mutualTls":{
+        "isVerifiedCertificateRequired": true,
+        "allowedSans": ["api.weather.com"]
+      }
+    },
+    "routes": [
+      {
+        "path": "/weather",
+        "methods": ["GET"],
+        "backend": {
+          "type": "HTTP_BACKEND",
+          "url": "https://api.weather.gov/${request.auth[region]}"
+        },
+        "requestPolicies": {
+          "authorization": {
+            "type": "ANY_OF",
+            "allowedScope": [ "weatherwatcher" ]
+          },
+          "headerValidations": {
+            "headers": {
+              "name": "header-name",
+              "required": true
+            },
+            "validationMode": "ENFORCING|PERMISSIVE|DISABLED"
+          },
+          "queryParameterValidations": {
+            "parameters": {
+              "name": "query-parameter-name",
+              "required": true
+            },
+            "validationMode": "ENFORCING|PERMISSIVE|DISABLED"
+          },
+          "bodyValidation": {
+            "required": true,
+            "content": {
+              "media-type-1": {
+                "validationType": "NONE"
+              },
+              "media-type-2": {
+                "validationType": "NONE"
+              }            
+            },
+            "validationMode": "ENFORCING|PERMISSIVE|DISABLED"
+          },
+          "headerTransformations": {
+            "renameHeaders": {
+              "items": [
+                {
+                  "from": "original-name",
+                  "to": "new-name"
+                }
+              ]
+            },
+            "setHeaders": {
+              "items": [
+                {
+                  "name": "header-name",
+                  "values": ["header-value"],
+                  "ifExists": "OVERWRITE|APPEND|SKIP"
+                }
+              ]
+            }            
+          },
+          "queryParameterTransformations": {
+            "filterQueryParameters": {
+              "type": "BLOCK|ALLOW",
+              "items": [
+                {
+                  "name": "query-parameter-name"
+                }
+              ]
+            },
+            "renameQueryParameters": {
+              "items": [
+                {
+                  "from": "original-name",
+                  "to": "new-name"
+                }
+              ]
+            },
+            "setQueryParameters": {
+              "items": [
+                {
+                  "name": "query-parameter-name",
+                  "values": ["query-parameter-value"],
+                  "ifExists": "OVERWRITE|APPEND|SKIP"
+                }
+              ]
+            }            
+          }          
+        },
+        "responsePolicies": {
+          "headerTransformations": {
+            "filterHeaders": {
+              "type": "BLOCK|ALLOW",
+              "items": [
+                {
+                  "name": "header-name"
+                }
+              ]
+            },
+            "renameHeaders": {
+              "items": [
+                {
+                  "from": "original-name",
+                  "to": "new-name"
+                }
+              ]
+            },
+            "setHeaders": {
+              "items": [
+                {
+                  "name": "header-name",
+                  "values": ["header-value"],
+                  "ifExists": "OVERWRITE|APPEND|SKIP"
+                }
+              ]
+            }                        
+          }
+        }        
+      }
+    ]
+  }

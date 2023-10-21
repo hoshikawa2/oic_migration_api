@@ -1,0 +1,27 @@
+[ {
+  "API_NAME" : "cep",
+  "TYPE" : "REST",
+  "METHOD" : "GET",
+  "PATH_PREFIX" : "/okecep",
+  "PATH" : "/cep",
+  "ENDPOINT" : "http://129.153.138.208/cep",
+  "QUERY_PARAMETERS" : "cep",
+  "GROOVY_SCRIPT" : "",
+  "AUTHENTICATION_TYPE" : "BASIC",
+  "ENVIRONMENT" : "QA",
+  "HEADER" : "",
+  "HEADER_VALUE" : ""
+}, {
+  "API_NAME" : "calculator",
+  "TYPE" : "SOAP",
+  "METHOD" : "POST",
+  "PATH_PREFIX" : "/dneonline",
+  "PATH" : "/calculator",
+  "ENDPOINT" : "http://www.dneonline.com/calculator.asmx",
+  "QUERY_PARAMETERS" : "",
+  "GROOVY_SCRIPT" : "",
+  "AUTHENTICATION_TYPE" : "BASIC",
+  "ENVIRONMENT" : "DEV",
+  "HEADER" : "",
+  "HEADER_VALUE" : ""
+} ]
