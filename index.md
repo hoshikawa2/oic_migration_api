@@ -77,6 +77,7 @@ In some situations, API metadata information will need to be handled. We could d
 
 - An Oracle Integration instance created
 - The OCI API Gateway instances created (in this example, one for QA and other for DEV environments)
+- The Oracle Integration instance needs to reach the OCI API Gateways instances (attention to private networks)
 
 ## Task 1: Understand your Source API data structure
 
