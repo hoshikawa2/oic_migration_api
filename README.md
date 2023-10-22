@@ -52,13 +52,27 @@ In some situations, API metadata information will need to be handled. We could d
 - Ease of executing REST calls from OCI API Gateway to deploy your APIs
 - Ease of mapping attributes from source to destination, including making the appropriate transformations
 - Easily implement flow to process all settings graphically
+
 ## Objectives
+
+- Create an OIC process to migrate a source API deployment definition to the OCI API Gateway
+- Process many sources definitions
+- Differentiate REST and SOAP definitions
+- Map the source attributes to the target OCI API Gateway
+- Deploy into the correct environment (QA, DEV)
 
 ## Prerequisites
 
+- An Oracle Integration instance created
+- The OCI API Gateway instances created (in this example, one for QA and other for DEV environments)
+
 ## Task 1: Understand your Source API data structure
 
+We can start from an API metadata structure. The best known definitions would be Open API, Swagger or even a spreadsheet with the attributes. In this material, we will start by thinking about an Excel structure and, from this structure, transform it into JSON.
+
 ![Excel_api_migration_source.png](images%2FExcel_api_migration_source.png)
+
+So, there is a JSON structure to work!
 
     [ {
       "API_NAME" : "cep",
@@ -89,7 +103,10 @@ In some situations, API metadata information will need to be handled. We could d
     } ]
 
 
-## Task : Understand the OCI API Gateway Deployment Data
+## Task 2: Understand the OCI API Gateway Deployment Data
+
+
+Often, a simple structure is enough to implement an API, but as details such as security, header rules, parameters or other details appear, the JSON structure becomes larger. Well, this would be the complete JSON structure for any type of deployment. We will use it in our OIC flow.
 
      {
         "requestPolicies": {
@@ -275,7 +292,7 @@ In some situations, API metadata information will need to be handled. We could d
         ]
       }
 
-## Task 2: Create Connections
+## Task 3: Create Connections
 
 There are 2 connections we need to create. First connection is the Trigger REST Connection. This connection will be used to expose an endpoint in Oracle Integration. With this endpoint, you can call the migration process as a REST service, passing the source data of your APIs.
 
@@ -293,7 +310,7 @@ If you don't know how to create an Oracle Integration Connection, you can view h
 4. In the second connection, as you did in the first connection, give a name and identifier (for example, "APIGW_REST_API"). Select the proper OCI API Gateway REST for your region (in the example, the region is Ashburn). See here to view the proper endpoint for your region [OCI API Gateway endpoints](https://docs.oracle.com/en-us/iaas/api/#/en/api-gateway/20190501/). Obtain your OCI Credentials to provide access to the OCI API gateway services.
    ![Connection_Apigateway_Rest_Api.png](images%2FConnection_Apigateway_Rest_Api.png)
 
-## Task 3: Create the Integration
+## Task 4: Create the Integration
 
 The process of migrate your APIs source metadata to the OCI API Gateway is:
 
@@ -395,13 +412,34 @@ The process of migrate your APIs source metadata to the OCI API Gateway is:
 You can see the Oracle Integration artifact here [OIC Migrate you Source API to OCI API Gateway](files%2FMIGRATE_TO_APIGW_01.00.0001.iar). This example of artifact does not intend to be used as a final process to your migration and has only the objective to illustrate the process. Use this artifact to guide your real implementation.
 
 
-## Task : Test the migration
+## Task 5: Test the migration
+
+Now we can test the migration. If you don't know how to test your application, you can follow these steps: [Testing REST trigger-based Integrations in OIC Console](https://blogs.oracle.com/integration/post/testing-rest-trigger-based-integrations-in-oic-console)
 
 ![Test_1aa.png](images%2FTest_1aa.png)
 
+Fill the Body with your source JSON data
+
 ![Test_1.png](images%2FTest_1.png)
+
+Run the test and wait until the finish
 
 ![Test_1a.png](images%2FTest_1a.png)
 
+Go to the OCI API Gateways instance deployments and see the creation of your APIs.
+
 ![Test_2.png](images%2FTest_2.png)
 
+## Related Links
+
+* [Creating an API Deployment Specification](https://docs.oracle.com/en-us/iaas/Content/APIGateway/Tasks/apigatewaycreatingspecification.htm#Creating_an_API_Deployment_Specification)
+* [Deploy an API using OCI CLI API in Python](https://docs.oracle.com/en-us/iaas/tools/python-sdk-examples/2.112.4/apigateway/create_deployment.py.html)
+* [Deploying an API on an API Gateway by Creating an API Deployment](https://docs.oracle.com/en-us/iaas/Content/APIGateway/Tasks/apigatewaycreatingdeployment.htm)
+* [Deploying APIs via REST](https://docs.oracle.com/en-us/iaas/api/#/en/api-gateway/20190501/Deployment/CreateDeployment)
+* [Create a REST Connection](https://docs.oracle.com/en/cloud/paas/integration-cloud/rest-adapter/create-connection.html#GUID-07B2A588-6DB8-47A9-A206-51B4132B0DA1)
+* [OCI API Gateway endpoints](https://docs.oracle.com/en-us/iaas/api/#/en/api-gateway/20190501/)
+* [Testing REST trigger-based Integrations in OIC Console](https://blogs.oracle.com/integration/post/testing-rest-trigger-based-integrations-in-oic-console)
+
+## Acknowledgments
+
+* **Author** - Cristiano Hoshikawa (Oracle LAD A-Team Solution Engineer)
