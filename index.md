@@ -2,6 +2,56 @@
 
 ## Introduction
 
+The API Gateway service allows you to publish APIs with accessible private endpoints on your network and that you can expose with public IP addresses if you want them to accept internet traffic. Endpoints support API validation, request and response transformation, CORS, authentication and authorization, and request limitation.
+
+Using the API Gateway service, you create one or more API gateways on a regional subnet to process API client traffic and route it to back-end services. You can use a single API gateway to link multiple back-end services (such as load balancers, compute instances, and OCI Functions) into a single consolidated API endpoint.
+
+You can access the API Gateway service to define API gateways and API deployments using the Console and the REST API.
+
+The Gateway API service is integrated with Oracle Cloud Infrastructure Identity and Access Management (IAM), which provides easy authentication with native Oracle Cloud Infrastructure identity functionality.
+
+The OCI API Gateway allows API deployment to be done by importing a JSON structure. Here you can see what the format of this structure looks like: [Creating an API Deployment Specification](https://docs.oracle.com/en-us/iaas/Content/APIGateway/Tasks/apigatewaycreatingspecification.htm#Creating_an_API_Deployment_Specification)
+
+    {
+      "requestPolicies": {},
+      "routes": [
+        {
+          "path": "<api-route-path>",
+          "methods": ["<method-list>"],
+          "backend": {
+            "type": "<backend-type>",
+            "<backend-target>": "<identifier>"
+          },
+          "requestPolicies": {}
+        }
+      ]
+    }
+
+In addition to the console, it is possible to deploy the API using the OCI CLI and also the OCI REST service for the API Gateway.
+Here is the documentation to understand how to deploy:
+
+* [Deploy an API using OCI CLI API in Python](https://docs.oracle.com/en-us/iaas/tools/python-sdk-examples/2.112.4/apigateway/create_deployment.py.html)
+* [Deploying an API on an API Gateway by Creating an API Deployment](https://docs.oracle.com/en-us/iaas/Content/APIGateway/Tasks/apigatewaycreatingdeployment.htm)
+
+If you already have your API structure to deploy in the standard OCI API Gateway format, it is easy to deploy it using the console (import), OCI CLI or by making a REST call.
+And having this structure ready, it is easy to create code to process multiple JSON files. This example below demonstrates how to process files using bash script code:
+
+    #!/bin/bash
+    # Folder containing JSON files
+    folder="/<your path to the JSON Files>"
+    # Loop through the JSON files in the folder
+    for file in "$folder"/*.json; do
+        service="${file##*/}"; service="${service%.*}"
+        echo "Service: $service"        # Read and display the contents of the JSON file
+        oci api-gateway deployment create --compartment-id ocid1.compartment.oc1..xxxxxxxxxxxxxxxxxxxxxxxxxx --display-name $service --gateway-id ocid1.apigateway.oc1.iad.xxxxxxxxxxxxxxxxxxxxxxxxxxxx --path-prefix "/$service" --specification file://$file --debug
+        echo "-------------------"
+    done
+
+In some situations, API metadata information will need to be handled. We could do this through code using Python, Java or another language, but the purpose of this article is to use Oracle Integration to automate it. There are several advantages to doing it this way:
+
+- Ease of executing REST calls from OCI API Gateway to deploy your APIs
+- Ease of mapping attributes from source to destination, including making the appropriate transformations
+- Easily implement flow to process all settings graphically
 ## Objectives
 
 ## Prerequisites
