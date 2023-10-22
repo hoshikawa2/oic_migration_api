@@ -20,6 +20,8 @@ You can access the API Gateway service to define API gateways and API deployment
 
 The Gateway API service is integrated with Oracle Cloud Infrastructure Identity and Access Management (IAM), which provides easy authentication with native Oracle Cloud Infrastructure identity functionality.
 
+If you have a SWAGGER or an OpenAPI, don't worry, you can import your API data to OCI API Gateway by importing in your OCI Console, OCI CLI or OCI API Gateway REST Service. See this article to do this: [Creating an API Resource with an API Description](https://docs.oracle.com/en-us/iaas/Content/APIGateway/Tasks/apigatewaycreatingapiobject.htm)
+
 The OCI API Gateway allows API deployment to be done by importing a JSON structure. Here you can see what the format of this structure looks like: [Creating an API Deployment Specification](https://docs.oracle.com/en-us/iaas/Content/APIGateway/Tasks/apigatewaycreatingspecification.htm#Creating_an_API_Deployment_Specification)
 
     {
@@ -78,7 +80,14 @@ In some situations, API metadata information will need to be handled. We could d
 
 ## Task 1: Understand your Source API data structure
 
-We can start from an API metadata structure. The best known definitions would be Open API, Swagger or even a spreadsheet with the attributes. In this material, we will start by thinking about an Excel structure and, from this structure, transform it into JSON.
+We can start from an API metadata structure. The best known definitions would be Open API or Swagger.
+
+If you have a SWAGGER or an OpenAPI, don't worry, you can import your API data to OCI API Gateway by importing in your OCI Console, OCI CLI or OCI API Gateway REST Service. See this article to do this: [Creating an API Resource with an API Description](https://docs.oracle.com/en-us/iaas/Content/APIGateway/Tasks/apigatewaycreatingapiobject.htm)
+
+But if you don't have these formats (Swagger/OpenAPI), you need to structure your API data definitions in another format.
+In this material, we will start by thinking about an Excel structure and, from this structure, transform it into JSON.
+
+
 
 ![Excel_api_migration_source.png](images%2FExcel_api_migration_source.png)
 
@@ -111,8 +120,10 @@ So, there is a JSON structure to work!
       "HEADER" : "",
       "HEADER_VALUE" : ""
     } ]
+ 
+These API data structure can be find here: [source_apis.json](files%2Fsource_apis.json)
 
-You can find these file here: [source_apis.json](files%2Fsource_apis.json)
+You can structure your API definitions data in any format, here is just an example to work.
 
 ## Task 2: Understand the OCI API Gateway Deployment Data
 
@@ -443,6 +454,7 @@ Go to the OCI API Gateways instance deployments and see the creation of your API
 
 ## Related Links
 
+* [Creating an API Resource with an API Description](https://docs.oracle.com/en-us/iaas/Content/APIGateway/Tasks/apigatewaycreatingapiobject.htm)
 * [Creating an API Deployment Specification](https://docs.oracle.com/en-us/iaas/Content/APIGateway/Tasks/apigatewaycreatingspecification.htm#Creating_an_API_Deployment_Specification)
 * [Deploy an API using OCI CLI API in Python](https://docs.oracle.com/en-us/iaas/tools/python-sdk-examples/2.112.4/apigateway/create_deployment.py.html)
 * [Deploying an API on an API Gateway by Creating an API Deployment](https://docs.oracle.com/en-us/iaas/Content/APIGateway/Tasks/apigatewaycreatingdeployment.htm)
