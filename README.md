@@ -439,8 +439,8 @@ You can see the Oracle Integration artifact here [OIC Migrate you Source API to 
 
 Now we can test the migration. If you don't know how to test your application, you can follow these steps:
 
-[Activate and Deactivate Integrations](https://docs.oracle.com/en/cloud/paas/integration-cloud/integrations-user/activate-and-deactivate-integrations.html#GUID-4D78EC6F-BC59-4A2C-8C2B-213AD7A09556)
-[Testing REST trigger-based Integrations in OIC Console](https://blogs.oracle.com/integration/post/testing-rest-trigger-based-integrations-in-oic-console)
+* [Activate and Deactivate Integrations](https://docs.oracle.com/en/cloud/paas/integration-cloud/integrations-user/activate-and-deactivate-integrations.html#GUID-4D78EC6F-BC59-4A2C-8C2B-213AD7A09556)
+* [Testing REST trigger-based Integrations in OIC Console](https://blogs.oracle.com/integration/post/testing-rest-trigger-based-integrations-in-oic-console)
 
 ![Test_1aa.png](images%2FTest_1aa.png)
 
