@@ -20,8 +20,6 @@ You can access the API Gateway service to define API gateways and API deployment
 
 The Gateway API service is integrated with Oracle Cloud Infrastructure Identity and Access Management (IAM), which provides easy authentication with native Oracle Cloud Infrastructure identity functionality.
 
-If you have a SWAGGER or an OpenAPI, don't worry, you can import your API data to OCI API Gateway by importing in your OCI Console, OCI CLI or OCI API Gateway REST Service. See this article to do this: [Creating an API Resource with an API Description](https://docs.oracle.com/en-us/iaas/Content/APIGateway/Tasks/apigatewaycreatingapiobject.htm)
-
 The OCI API Gateway allows API deployment to be done by importing a JSON structure. Here you can see what the format of this structure looks like: [Creating an API Deployment Specification](https://docs.oracle.com/en-us/iaas/Content/APIGateway/Tasks/apigatewaycreatingspecification.htm#Creating_an_API_Deployment_Specification)
 
     {
@@ -67,6 +65,8 @@ In some situations, API metadata information will need to be handled. We could d
 
 ## Objectives
 
+- Explain how to import your Legacy APIs specification to the OCI API Gateway
+- Explain the known formats and what format OCI API Gateway can import natively
 - Create an OIC process to migrate a source API deployment definition to the OCI API Gateway
 - Process many sources definitions
 - Differentiate REST and SOAP definitions
@@ -127,6 +127,7 @@ You can structure your API definitions data in any format, here is just an examp
 
 ## Task 2: Understand the OCI API Gateway Deployment Data
 
+In this section, you can see the native format to import your APIs definition into the OCI API Gateway.
 
 Often, a simple structure is enough to implement an API, but as details such as security, header rules, parameters or other details appear, the JSON structure becomes larger. Well, this would be the complete JSON structure for any type of deployment. We will use it in our OIC flow. You can find the file here: [apigw_structure.json](files%2Fapigw_structure.json)
 
@@ -436,7 +437,10 @@ You can see the Oracle Integration artifact here [OIC Migrate you Source API to 
 
 ## Task 5: Test the migration
 
-Now we can test the migration. If you don't know how to test your application, you can follow these steps: [Testing REST trigger-based Integrations in OIC Console](https://blogs.oracle.com/integration/post/testing-rest-trigger-based-integrations-in-oic-console)
+Now we can test the migration. If you don't know how to test your application, you can follow these steps: 
+
+[Activate and Deactivate Integrations](https://docs.oracle.com/en/cloud/paas/integration-cloud/integrations-user/activate-and-deactivate-integrations.html#GUID-4D78EC6F-BC59-4A2C-8C2B-213AD7A09556)
+[Testing REST trigger-based Integrations in OIC Console](https://blogs.oracle.com/integration/post/testing-rest-trigger-based-integrations-in-oic-console)
 
 ![Test_1aa.png](images%2FTest_1aa.png)
 
@@ -461,6 +465,7 @@ Go to the OCI API Gateways instance deployments and see the creation of your API
 * [Deploying APIs via REST](https://docs.oracle.com/en-us/iaas/api/#/en/api-gateway/20190501/Deployment/CreateDeployment)
 * [Create a REST Connection](https://docs.oracle.com/en/cloud/paas/integration-cloud/rest-adapter/create-connection.html#GUID-07B2A588-6DB8-47A9-A206-51B4132B0DA1)
 * [OCI API Gateway endpoints](https://docs.oracle.com/en-us/iaas/api/#/en/api-gateway/20190501/)
+* [Activate and Deactivate Integrations](https://docs.oracle.com/en/cloud/paas/integration-cloud/integrations-user/activate-and-deactivate-integrations.html#GUID-4D78EC6F-BC59-4A2C-8C2B-213AD7A09556)
 * [Testing REST trigger-based Integrations in OIC Console](https://blogs.oracle.com/integration/post/testing-rest-trigger-based-integrations-in-oic-console)
 
 ## Acknowledgments
