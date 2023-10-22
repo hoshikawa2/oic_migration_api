@@ -2,6 +2,56 @@
 
 ## Introduction
 
+The API Gateway service allows you to publish APIs with accessible private endpoints on your network and that you can expose with public IP addresses if you want them to accept internet traffic. Endpoints support API validation, request and response transformation, CORS, authentication and authorization, and request limitation.
+
+Using the API Gateway service, you create one or more API gateways on a regional subnet to process API client traffic and route it to back-end services. You can use a single API gateway to link multiple back-end services (such as load balancers, compute instances, and OCI Functions) into a single consolidated API endpoint.
+
+You can access the API Gateway service to define API gateways and API deployments using the Console and the REST API.
+
+The Gateway API service is integrated with Oracle Cloud Infrastructure Identity and Access Management (IAM), which provides easy authentication with native Oracle Cloud Infrastructure identity functionality.
+
+The OCI API Gateway allows API deployment to be done by importing a JSON structure. Here you can see what the format of this structure looks like: [Creating an API Deployment Specification](https://docs.oracle.com/en-us/iaas/Content/APIGateway/Tasks/apigatewaycreatingspecification.htm#Creating_an_API_Deployment_Specification)
+
+    {
+      "requestPolicies": {},
+      "routes": [
+        {
+          "path": "<api-route-path>",
+          "methods": ["<method-list>"],
+          "backend": {
+            "type": "<backend-type>",
+            "<backend-target>": "<identifier>"
+          },
+          "requestPolicies": {}
+        }
+      ]
+    }
+
+In addition to the console, it is possible to deploy the API using the OCI CLI and also the OCI REST service for the API Gateway.
+Here is the documentation to understand how to deploy:
+
+* [Deploy an API using OCI CLI API in Python](https://docs.oracle.com/en-us/iaas/tools/python-sdk-examples/2.112.4/apigateway/create_deployment.py.html)
+* [Deploying an API on an API Gateway by Creating an API Deployment](https://docs.oracle.com/en-us/iaas/Content/APIGateway/Tasks/apigatewaycreatingdeployment.htm)
+
+If you already have your API structure to deploy in the standard OCI API Gateway format, it is easy to deploy it using the console (import), OCI CLI or by making a REST call.
+And having this structure ready, it is easy to create code to process multiple JSON files. This example below demonstrates how to process files using bash script code:
+
+    #!/bin/bash
+    # Folder containing JSON files
+    folder="/<your path to the JSON Files>"
+    # Loop through the JSON files in the folder
+    for file in "$folder"/*.json; do
+        service="${file##*/}"; service="${service%.*}"
+        echo "Service: $service"        # Read and display the contents of the JSON file
+        oci api-gateway deployment create --compartment-id ocid1.compartment.oc1..xxxxxxxxxxxxxxxxxxxxxxxxxx --display-name $service --gateway-id ocid1.apigateway.oc1.iad.xxxxxxxxxxxxxxxxxxxxxxxxxxxx --path-prefix "/$service" --specification file://$file --debug
+        echo "-------------------"
+    done
+
+In some situations, API metadata information will need to be handled. We could do this through code using Python, Java or another language, but the purpose of this article is to use Oracle Integration to automate it. There are several advantages to doing it this way:
+
+- Ease of executing REST calls from OCI API Gateway to deploy your APIs
+- Ease of mapping attributes from source to destination, including making the appropriate transformations
+- Easily implement flow to process all settings graphically
 ## Objectives
 
 ## Prerequisites
@@ -235,13 +285,13 @@ The OCI API Gateway REST documentation can be read here: [Deploying APIs via RES
 If you don't know how to create an Oracle Integration Connection, you can view here: [Create a REST Connection](https://docs.oracle.com/en/cloud/paas/integration-cloud/rest-adapter/create-connection.html#GUID-07B2A588-6DB8-47A9-A206-51B4132B0DA1)
 
 1. Search the REST Adapter:
-![connection_rest_1.png](images%2Fconnection_rest_1.png)
+   ![connection_rest_1.png](images%2Fconnection_rest_1.png)
 2. Give a name and identifier, for example, give the name "REST_EXPOSE". This is the first connection. Select the Trigger Role. Trigger Role means you will expose the connection as a REST endpoint.
-![Connection_Rest_2.png](images%2FConnection_Rest_2.png)
+   ![Connection_Rest_2.png](images%2FConnection_Rest_2.png)
 3. For your Trigger Endpoint, you can execute a request with the Oracle Integration Basic Authentication. So, you can use an username and password.
-![Connect_Rest_3.png](images%2FConnect_Rest_3.png)
+   ![Connect_Rest_3.png](images%2FConnect_Rest_3.png)
 4. In the second connection, as you did in the first connection, give a name and identifier (for example, "APIGW_REST_API"). Select the proper OCI API Gateway REST for your region (in the example, the region is Ashburn). See here to view the proper endpoint for your region [OCI API Gateway endpoints](https://docs.oracle.com/en-us/iaas/api/#/en/api-gateway/20190501/). Obtain your OCI Credentials to provide access to the OCI API gateway services.
-![Connection_Apigateway_Rest_Api.png](images%2FConnection_Apigateway_Rest_Api.png)
+   ![Connection_Apigateway_Rest_Api.png](images%2FConnection_Apigateway_Rest_Api.png)
 
 ## Task 3: Create the Integration
 
@@ -252,7 +302,7 @@ The process of migrate your APIs source metadata to the OCI API Gateway is:
 - Initialize the Compartments for the targets
 - Execute a Loop to process all APIs in the source metadata
 - Translate the source metadata to the OCI API Gateway metadata
-- Execute a Request REST Service to the OCI API Gateway 
+- Execute a Request REST Service to the OCI API Gateway
 
 ![Create_Integration_1.png](images%2FCreate_Integration_1.png)
 
@@ -261,16 +311,16 @@ The process of migrate your APIs source metadata to the OCI API Gateway is:
 ![Integration_1.png](images%2FIntegration_1.png)
 
 2. Give a name to your request endpoint
-![Integration_1a.png](images%2FIntegration_1a.png)
+   ![Integration_1a.png](images%2FIntegration_1a.png)
 
 3. Give a path (for example, /convert) and select the POST method. Remember to stablish a request payload.
-![Integration_1b.png](images%2FIntegration_1b.png)
+   ![Integration_1b.png](images%2FIntegration_1b.png)
 
 4. Now you can select the "JSON Sample" and paste your JSON source structure
-![Integration_1c.png](images%2FIntegration_1c.png)
+   ![Integration_1c.png](images%2FIntegration_1c.png)
 
 5. Paste the JSON here
-![Integration_1d.png](images%2FIntegration_1d.png)
+   ![Integration_1d.png](images%2FIntegration_1d.png)
 
 6. Now let's initialize the variables for your API Gateways instance (each environment is a new API Gateway instance). Create a variable for the METHOD. Remember you can use several methods in REST (GET, POST, PUT, DELETE, ANY) and need to use POST in SOAP Services.
 
@@ -283,9 +333,9 @@ The process of migrate your APIs source metadata to the OCI API Gateway is:
 ![Integration_3.png](images%2FIntegration_3.png)
 
 8. Edit the For Each Action and drag and drop your Loop Level Array to the "Repeating Element" Attribute
-![Integration_3a.png](images%2FIntegration_3a.png)
+   ![Integration_3a.png](images%2FIntegration_3a.png)
 
-9. Now let's configure the environment redirection. Create a Switch Action and put the IFs and the assignments for each condition. 
+9. Now let's configure the environment redirection. Create a Switch Action and put the IFs and the assignments for each condition.
 
 ![Integration_4.png](images%2FIntegration_4.png)
 
@@ -294,10 +344,10 @@ The process of migrate your APIs source metadata to the OCI API Gateway is:
 ![Integration_4a.png](images%2FIntegration_4a.png)
 
 11. Verify in the source metadata ENVIRONMENT attribute and test if has "QA" value.
-![Integration_4b.png](images%2FIntegration_4b.png)
+    ![Integration_4b.png](images%2FIntegration_4b.png)
 
 12. If the condition is true, you need to assign the correct environment. A GatewayID and CompartmentID is an OCID value. You need to assign the correct IDs to the variables.
-![Integration_4c.png](images%2FIntegration_4c.png)
+    ![Integration_4c.png](images%2FIntegration_4c.png)
 
 13. Do the same for the other environments
 
@@ -308,7 +358,7 @@ The process of migrate your APIs source metadata to the OCI API Gateway is:
 ![Integration_5a.png](images%2FIntegration_5a.png)
 
 15. Create an IF condition to test the service type
-![Integration_5b.png](images%2FIntegration_5b.png)
+    ![Integration_5b.png](images%2FIntegration_5b.png)
 
 16.  Assign the POST value to the method variable
 
@@ -334,7 +384,7 @@ The process of migrate your APIs source metadata to the OCI API Gateway is:
 
 ![Integration_6b.png](images%2FIntegration_6b.png)
 
-21. You can't paste the JSON OCI API Gateway structure because of the large size of it. So you need to upload a file with the content. The complete JSON Structure is here [apigw_structure.json](files%2Fapigw_structure.json) 
+21. You can't paste the JSON OCI API Gateway structure because of the large size of it. So you need to upload a file with the content. The complete JSON Structure is here [apigw_structure.json](files%2Fapigw_structure.json)
 
 ![Integration_6c.png](images%2FIntegration_6c.png)
 
