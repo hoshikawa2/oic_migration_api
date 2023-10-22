@@ -1,3 +1,13 @@
+---
+duration: PT1H00M0S
+description: Migrate your APIs to Oracle Cloud API Gateway with Oracle Integration
+level: Advanced
+roles: Devops;Developer
+products: en/cloud/oracle-cloud-infrastructure/oci
+keywords: api gateway;oracle integration;APIs REST/SOAP
+inject-note: true
+---
+
 # Migrate your APIs to Oracle Cloud API Gateway with Oracle Integration
 
 ## Introduction
@@ -102,11 +112,12 @@ So, there is a JSON structure to work!
       "HEADER_VALUE" : ""
     } ]
 
+You can find these file here: [source_apis.json](files%2Fsource_apis.json)
 
 ## Task 2: Understand the OCI API Gateway Deployment Data
 
 
-Often, a simple structure is enough to implement an API, but as details such as security, header rules, parameters or other details appear, the JSON structure becomes larger. Well, this would be the complete JSON structure for any type of deployment. We will use it in our OIC flow.
+Often, a simple structure is enough to implement an API, but as details such as security, header rules, parameters or other details appear, the JSON structure becomes larger. Well, this would be the complete JSON structure for any type of deployment. We will use it in our OIC flow. You can find the file here: [apigw_structure.json](files%2Fapigw_structure.json)
 
      {
         "requestPolicies": {
@@ -307,7 +318,7 @@ If you don't know how to create an Oracle Integration Connection, you can view h
    ![Connection_Rest_2.png](images%2FConnection_Rest_2.png)
 3. For your Trigger Endpoint, you can execute a request with the Oracle Integration Basic Authentication. So, you can use an username and password.
    ![Connect_Rest_3.png](images%2FConnect_Rest_3.png)
-4. In the second connection, as you did in the first connection, give a name and identifier (for example, "APIGW_REST_API"). Select the proper OCI API Gateway REST for your region (in the example, the region is Ashburn). See here to view the proper endpoint for your region [OCI API Gateway endpoints](https://docs.oracle.com/en-us/iaas/api/#/en/api-gateway/20190501/). Obtain your OCI Credentials to provide access to the OCI API gateway services.
+4. In the second connection, as you did in the first connection, give a name and identifier (for example, "APIGW_REST_API"). Remember to select the Invoke type unlike the first configuration. Select the proper OCI API Gateway REST for your region (in the example, the region is Ashburn). See here to view the proper endpoint for your region [OCI API Gateway endpoints](https://docs.oracle.com/en-us/iaas/api/#/en/api-gateway/20190501/). Obtain your OCI Credentials to provide access to the OCI API gateway services.
    ![Connection_Apigateway_Rest_Api.png](images%2FConnection_Apigateway_Rest_Api.png)
 
 ## Task 4: Create the Integration
