@@ -122,7 +122,7 @@ So, there is a JSON structure to work!
       "HEADER_VALUE" : ""
     } ]
  
-These API data structure can be find here: [source_apis.json](files%2Fsource_apis.json)
+These API data structure can be found here: [source_apis.json](files%2Fsource_apis.json)
 
 You can structure your API definitions data in any format, here is just an example to work.
 
